@@ -1,0 +1,53 @@
+import { useState } from "react";
+import { addProperty } from "./api";
+
+function PropertyForm() {
+
+    const [title, setTitle] = useState("");
+    const [location, setLocation] = useState("");
+    const [price, setPrice] = useState("");
+    const [image, setImage] = useState(null);
+
+    const submit = async (e) => {
+        e.preventDefault();
+
+        const data = new FormData();
+
+        data.append("title", title);
+        data.append("location", location);
+        data.append("price", price);
+        data.append("image", image);
+
+        await addProperty(data);
+
+        alert("Property Added");
+    };
+
+    return (
+        <form onSubmit={submit}>
+            <input
+                placeholder="Title"
+                onChange={(e)=>setTitle(e.target.value)}
+            />
+
+            <input
+                placeholder="Location"
+                onChange={(e)=>setLocation(e.target.value)}
+            />
+
+            <input
+                placeholder="Price"
+                onChange={(e)=>setPrice(e.target.value)}
+            />
+
+            <input
+                type="file"
+                onChange={(e)=>setImage(e.target.files[0])}
+            />
+
+            <button>Add Property</button>
+        </form>
+    );
+}
+
+export default PropertyForm;
