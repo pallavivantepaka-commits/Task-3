@@ -1,0 +1,30 @@
+import { useEffect, useState } from "react";
+import { getProperties } from "./api";
+
+function PropertyList() {
+
+    const [properties, setProperties] = useState([]);
+
+    useEffect(() => {
+        getProperties().then(res => setProperties(res.data));
+    }, []);
+
+    return (
+        <div>
+            {properties.map((item) => (
+                <div key={item._id}>
+                    <img
+                        src={item.image}
+                        width="200"
+                        alt={item.title}
+                    />
+                    <h3>{item.title}</h3>
+                    <p>{item.location}</p>
+                    <p>₹ {item.price}</p>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+export default PropertyList;
